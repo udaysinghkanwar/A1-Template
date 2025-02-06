@@ -71,9 +71,9 @@ public class Maze {
     for (int row = 0; row < mazeHeight; row++) {
       for (int col = 0; col < mazeWidth; col++) {
         if (mazeGrid[row][col] == 1) {
-          System.out.print("WALL ");
+          System.out.print("#");
         } else {
-          System.out.print("PATH ");
+          System.out.print(" ");
         }
       }
       System.out.println();
