@@ -34,7 +34,24 @@ public class Maze {
     } catch (Exception e) {
       logger.error("/!\\ An error occurred. The file was not found. /!\\");
     }
+    populateMazeGrid();
+    entryExitPoints();
+
   }
+
+  public int getEntryRow() {
+    return entryRow;
+  }
+  public int getExitRow() {
+    return exitRow;
+  }
+  public int[][] getMazeGrid() {
+    return mazeGrid;
+  }
+  public int getMazeWidth() {
+    return mazeWidth;
+  }
+
 
   // Method to populate the maze array from the file
   public void populateMazeGrid() {

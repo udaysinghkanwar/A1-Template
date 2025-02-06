@@ -27,26 +27,29 @@ public class Main {
             CommandLineParser parser = new DefaultParser();
             CommandLine cmd = parser.parse(options, args);
 
-            if (!cmd.hasOption("i")) { throw new Exception("no command given"); }
-            if (!cmd.hasOption("p")) {
+            if (!cmd.hasOption("i")) { throw new Exception("no -i command given"); }
+            /*if (!cmd.hasOption("p")) {
                 throw new Exception("Path (-p) not provided.");
-            }
+            }*/
             
             String mazeFilePath = cmd.getOptionValue("i");
             System.out.println(mazeFilePath);
 
-            String path = cmd.getOptionValue("p");
+            //String path = cmd.getOptionValue("p");
 
             Maze m = new Maze(mazeFilePath, logger);
-            m.populateMazeGrid();
             m.displayMaze();
-            m.entryExitPoints();
+            
 
-            if (m.isValidPath(path)) {
+            /*if (m.isValidPath(path)) {
                 System.out.println("The path is valid.");
               } else {
                 System.out.println("The path is invalid.");
-              }
+              }*/
+            MazeSolver solver = new MazeSolver(m);
+            String final_path = solver.solveMaze();
+            System.out.println(final_path);
+
 
         } catch(Exception e) {
             logger.error("/!\\ An error has occured /!\\");
