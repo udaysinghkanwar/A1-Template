@@ -19,7 +19,7 @@ public class Main {
         logger.info("** Starting Maze Runner");
         try {
             // -i argument detection
-
+            String path="";
             Options options = new Options();
             options.addOption("i", true, "Path to the input maze file");
             options.addOption("p", true, "input path to validate");
@@ -28,30 +28,36 @@ public class Main {
             CommandLine cmd = parser.parse(options, args);
 
             if (!cmd.hasOption("i")) { throw new Exception("no -i command given"); }
-            /*if (!cmd.hasOption("p")) {
-                throw new Exception("Path (-p) not provided.");
-            }*/
-            
+           
             String mazeFilePath = cmd.getOptionValue("i");
             System.out.println(mazeFilePath);
 
-            //String path = cmd.getOptionValue("p");
-
             Maze m = new Maze(mazeFilePath, logger);
             m.displayMaze();
+
+
+            if (cmd.hasOption("p")) {
+
+                path = cmd.getOptionValue("p");
+                if (m.isValidPath(path)) {
+                    System.out.println("The path is valid.");
+                  } else {
+                    System.out.println("The path is invalid.");
+                }
+    
+            } 
+            else {
+                MazeSolver solver = new MazeSolver(m);
+                String final_path = solver.solveMaze();
+                System.out.println("The canonical path is : " + final_path);
+                System.out.println("The factorized path is: " + solver.factorizedPath(final_path));
+            }
+
+            
             
 
-            /*if (m.isValidPath(path)) {
-                System.out.println("The path is valid.");
-              } else {
-                System.out.println("The path is invalid.");
-              }*/
-            MazeSolver solver = new MazeSolver(m);
-            String final_path = solver.solveMaze();
-            System.out.println(final_path);
-
-
         } catch(Exception e) {
+            System.out.println(e.getMessage());
             logger.error("/!\\ An error has occured /!\\");
         }
         logger.info("**** Computing path");

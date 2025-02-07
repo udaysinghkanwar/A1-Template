@@ -12,7 +12,7 @@ public class Maze {
 
   protected int mazeHeight = -1;
   protected int mazeWidth = -1;
-  // 2D array representation of the maze
+
   protected int[][] mazeGrid;
 
   protected int entryRow = -1;
@@ -111,11 +111,14 @@ public class Maze {
     }
   }
 
-  public boolean isValidPath(String path) {
+  public boolean isValidPath(String path) throws Exception {
     int currentRow = entryRow;
     int currentCol = 0;
     char currentDirection = 'E'; // Starting direction (East)
 
+    if (path.length() == 0) {
+      throw new Exception("no -i command given");
+    }
     for (char move : path.toCharArray()) {
       if (move == 'F') {
         switch (currentDirection) {
