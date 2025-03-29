@@ -13,7 +13,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-//FRFLFLFRFF
+//FRFLFFLFRF
+//LFFFF
 class PathTest {
     private Maze maze;
     private static final String TEST_MAZE = """
@@ -21,6 +22,32 @@ class PathTest {
             #   #
                
             #   #
+            #####
+            """;
+
+
+    private static final String NO_EXIT_MAZE = """
+            #####
+            #   #
+                #
+            #   #
+            #####
+            """;
+
+    private static final String COMPLEX_MAZE = """
+            ######
+            #    #
+              #  #
+            #     
+            ######
+            """;
+
+    private static final String EDGE_MAZE = """
+            #####
+            #   #
+                
+            #   # 
+            #   
             #####
             """;
 
@@ -73,10 +100,68 @@ class PathTest {
     }
 
     @Test
-    @DisplayName("Test invalid direction sequence")
-    void testInvalidDirectionSequence() throws Exception {
+    @DisplayName("Invalid input")
+    void testInvalidInpu() throws Exception {
         // Path with turns that lead to invalid position
-        String path = "RRRRFF";
+        String path = "!!45F";
         assertFalse(maze.isValidPath(path));
     }
+
+    @Test
+    @DisplayName("Test solving straight maze")
+    void testSolveStraightMaze(@TempDir Path tempDir) throws Exception {
+        Path mazePath = tempDir.resolve("test_maze.txt");
+        Files.writeString(mazePath, TEST_MAZE);
+        Maze straightMaze = new Maze(mazePath.toString(), org.apache.logging.log4j.LogManager.getLogger());
+        MazeSolver solver = new MazeSolver(straightMaze);
+    
+        String path = solver.solveMaze();
+        assertEquals(path, "FRFLFFLFRF");
+        assertEquals("FRFL2FLFRF", solver.factorizedPath(path));
+    }
+
+
+    @Test
+    @DisplayName("Test solving complex maze")
+    void testSolveComplexMaze(@TempDir Path tempDir) throws Exception {
+        Path mazePath = tempDir.resolve("complex_maze.txt");
+        Files.writeString(mazePath, COMPLEX_MAZE);
+        Maze complexMaze = new Maze(mazePath.toString(), org.apache.logging.log4j.LogManager.getLogger());
+        MazeSolver solver = new MazeSolver(complexMaze);
+        
+        String path = solver.solveMaze();
+        assertEquals(path, "FRFLFFFF");
+    }
+
+    @Test
+    @DisplayName("Test maze with two exits")
+    void testSolveEdgeMaze(@TempDir Path tempDir) throws Exception {
+        Path mazePath = tempDir.resolve("edge_maze.txt");
+        Files.writeString(mazePath, EDGE_MAZE);
+        Maze edgeMaze = new Maze(mazePath.toString(), org.apache.logging.log4j.LogManager.getLogger());
+        MazeSolver solver = new MazeSolver(edgeMaze);
+        
+        String path = solver.solveMaze();
+        assertEquals(path, "FRFFLFFF");
+    }
+      
+    
+      @Test
+      @DisplayName("Test maze with no exit throws exception")
+      void testNoExitMaze(@TempDir Path tempDir) throws Exception {
+        Path mazePath = tempDir.resolve("no_exit_maze.txt");
+        Files.writeString(mazePath, NO_EXIT_MAZE);
+        Maze edgeMaze = new Maze(mazePath.toString(), org.apache.logging.log4j.LogManager.getLogger());
+        MazeSolver solver = new MazeSolver(edgeMaze);
+        
+        
+        
+        Exception exception = assertThrows(Exception.class, () -> {
+            solver.solveMaze();
+        });
+        
+        assertEquals("No valid exit point", exception.getMessage());
+      }
+    
 }
+

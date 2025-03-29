@@ -9,7 +9,7 @@ public class MazeSolver {
         this.maze= maze;
     }
 
-    public String solveMaze() {
+    public String solveMaze() throws Exception {
         int[][] mazeGrid = maze.getMazeGrid();
         int entryRow = maze.getEntryRow();
         int exitRow = maze.getExitRow();
@@ -20,6 +20,10 @@ public class MazeSolver {
         int currentRow = entryRow;
         int currentCol = 0;
         path = "";
+
+        if (exitRow ==-1) {
+            throw new Exception("No valid exit point");
+          }
         
         // Initial direction: East (assuming entry is on the left)
         char currentDirection = 'E';
