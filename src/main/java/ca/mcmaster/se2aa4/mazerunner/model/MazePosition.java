@@ -11,7 +11,7 @@ public class MazePosition {
         this.direction = direction;
     }
     
-    // Getters and setters
+    // Getters and setters for the maze position
     public int getRow() { return row; }
     public void setRow(int row) { this.row = row; }
     public int getCol() { return col; }

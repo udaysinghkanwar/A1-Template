@@ -16,6 +16,7 @@ import org.junit.jupiter.api.io.TempDir;
 //FRFLFFLFRF
 //LFFFF
 class PathTest {
+    // test class for the path and maze solving capabilities of the program
     private Maze maze;
     private static final String TEST_MAZE = """
             #####
@@ -106,6 +107,8 @@ class PathTest {
         String path = "!!45F";
         assertFalse(maze.isValidPath(path));
     }
+
+
 
     @Test
     @DisplayName("Test solving straight maze")

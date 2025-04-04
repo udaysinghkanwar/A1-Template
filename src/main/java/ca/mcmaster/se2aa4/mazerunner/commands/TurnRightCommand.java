@@ -3,6 +3,8 @@ package ca.mcmaster.se2aa4.mazerunner.commands;
 import ca.mcmaster.se2aa4.mazerunner.model.MazePosition;
 
 public class TurnRightCommand implements MazeCommand {
+    
+    // execute method to turn right in the maze
     @Override
     public void execute(MazePosition position) {
         switch(position.getDirection()) {

@@ -8,7 +8,7 @@ public class MoveForwardCommand implements MazeCommand {
     public MoveForwardCommand(int[][] mazeGrid) {
         this.mazeGrid = mazeGrid;
     }
-    
+    // execute method to move forward in the maze
     @Override
     public void execute(MazePosition position) {
         switch(position.getDirection()) {

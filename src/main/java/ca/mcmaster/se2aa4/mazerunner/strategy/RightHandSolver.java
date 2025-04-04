@@ -19,6 +19,7 @@ public class RightHandSolver extends MazeSolvingStrategy {
         path = new StringBuilder();
     }
     
+    // executeSolve method to solve the maze using the right hand rule as defined in the assignment
     @Override
     protected void executeSolve() {
         int[][] mazeGrid = maze.getMazeGrid();
